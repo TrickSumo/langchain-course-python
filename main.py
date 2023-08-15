@@ -1,22 +1,24 @@
-from langchain.chat_models import ChatOpenAI
-from langchain.schema import SystemMessage,HumanMessage,AIMessage
+from langchain.llms import OpenAI
+from langchain import PromptTemplate
+from langchain.output_parsers import CommaSeparatedListOutputParser
 
 from dotenv import load_dotenv
 load_dotenv()
 
-llm=ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0.7)
+llm = OpenAI(model_name="text-davinci-003",temperature=1)
 
-messages = [SystemMessage(content="You are AWS certified solutions architect, help me to learn AWS"),
-            HumanMessage(content="Hi, I want to know what is AWS"),
-            AIMessage(content="""Hi there! AWS stands for Amazon Web Services. It is a cloud computing platform provided by Amazon. AWS offers a wide range of cloud services, including computing power, storage options, content delivery, databases, analytics, machine learning, and more. It allows individuals and organizations to build and deliver applications and services 
-using the power of cloud computing. AWS provides a scalable and flexible infrastructure that enables businesses to quickly scale up or down based on their needs, pay only for 
-the resources they use, and eliminate the need for upfront infrastructure investments."""),
-HumanMessage(content="how many questions I asked?")
-]
+output_parser = CommaSeparatedListOutputParser()
+format_instructions = output_parser.get_format_instructions()
 
-res = llm(messages)
-print(res)
+prompt_template = PromptTemplate(template="List five {object} \n {format_instructions}",
+                                 input_variables=["object"],
+                                 partial_variables={"format_instructions":format_instructions})
+query = prompt_template.format(object="chocolate ice cream")
 
+# print(query)
 
+res = llm(query)
+# print(res)
 
-
+parsed_data = output_parser.parse(res)
+print(parsed_data)
