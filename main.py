@@ -1,44 +1,21 @@
 from langchain.chat_models import ChatOpenAI
-from langchain.prompts import ChatPromptTemplate
-from langchain.prompts.chat import SystemMessage, HumanMessagePromptTemplate
-# from langchain.schema import SystemMessage,HumanMessage,AIMessage
+from langchain.schema import SystemMessage,HumanMessage,AIMessage
 
 from dotenv import load_dotenv
 load_dotenv()
 
 llm=ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0.7)
 
-input_data = input("Enter something \n ")
-
-prompt_message = ChatPromptTemplate.from_messages(
-    [
-    SystemMessage(content="You are a helpful assistant that re-writes the user's text to sound more upbeat."),
-    HumanMessagePromptTemplate.from_template("{data}"),
+messages = [SystemMessage(content="You are AWS certified solutions architect, help me to learn AWS"),
+            HumanMessage(content="Hi, I want to know what is AWS"),
+            AIMessage(content="""Hi there! AWS stands for Amazon Web Services. It is a cloud computing platform provided by Amazon. AWS offers a wide range of cloud services, including computing power, storage options, content delivery, databases, analytics, machine learning, and more. It allows individuals and organizations to build and deliver applications and services 
+using the power of cloud computing. AWS provides a scalable and flexible infrastructure that enables businesses to quickly scale up or down based on their needs, pay only for 
+the resources they use, and eliminate the need for upfront infrastructure investments."""),
+HumanMessage(content="how many questions I asked?")
 ]
-)
-query_message = prompt_message.format_messages(data = input_data)
 
-res = llm(query_message)
-
+res = llm(messages)
 print(res)
-
-# llm=ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0.7)
-# messages = [SystemMessage(content="You are AWS certified solutions architect, help me to learn AWS"),
-#             HumanMessage(content="Hi, what is AWS?")
-# ]
-
-# res = llm(messages)
-# print(res)
-
-
-
-
-
-
-
-
-
-
 
 
 
