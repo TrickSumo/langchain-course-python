@@ -9,6 +9,9 @@ langchain = "*"
 openai = "*"
 flask = "*"
 pydantic = "*"
+google-search-results = "*"
+pandas = "*"
+tabulate = "*"
 
 [dev-packages]
 
