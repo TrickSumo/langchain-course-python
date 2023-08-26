@@ -12,6 +12,9 @@ pydantic = "*"
 google-search-results = "*"
 pandas = "*"
 tabulate = "*"
+pypdf = "*"
+playwright = "*"
+bs4 = "*"
 
 [dev-packages]
 

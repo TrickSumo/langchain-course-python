@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="container">
+      <input type="text" id="name" placeholder="Company Name" /> <br />
+      <input type="text" id="url" placeholder="Job Description URL" /> <br />
+      <button onclick="callLLM()">Generate Cover Letter</button>
+      <div id="output"></div>
+    </div>
+    <script>
+      const callLLM = () => {
+        const company = document.getElementById("name").value;
+        const url = document.getElementById("url").value;
+        const outputArea = document.getElementById("output");
+        outputArea.innerHTML = "Loading...";
+        outputArea.style.backgroundColor = "transparent"; //
+
+        const api = "http://127.0.0.1:5000/coverletter";
+
+        fetch(api, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ company, url }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            outputArea.innerHTML = data;
+            outputArea.style.backgroundColor = "#d4edda";
+          });
+      };
+    </script>
+
+    <style>
+      input[type="text"] {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        width: 60%;
+      }
+      button {
+        padding: 10px 20px;
+        border: none;
+        background-color: #007bff;
+        color: #fff;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      button:hover {
+        background-color: #0056b3;
+      }
+      #container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+    </style>
+  </body>
+</html>
