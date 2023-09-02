@@ -1,18 +1,24 @@
-from sentence_transformers import SentenceTransformer
-model = SentenceTransformer('all-MiniLM-L6-v2')
+import tiktoken
 
-#Our sentences we like to encode
-sentences = ['This framework generates embeddings for each input sentence',
-    'Sentences are passed as a list of string.',
-    'The quick brown fox jumps over the lazy dog.']
+from langchain.document_loaders import PyPDFLoader
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 
-#Sentences are encoded by calling model.encode()
-embeddings = model.encode(sentences)
+loader = PyPDFLoader(file_path="./q.pdf")
+data = loader.load()
 
-#Print the embeddings
-for sentence, embedding in zip(sentences, embeddings):
-    print("Sentence:", sentence)
-    print("Embedding:", embedding)
-    print("dimension", len(embedding))
-    print("")
+text_splitter = RecursiveCharacterTextSplitter(chunk_size = 500, chunk_overlap=30)
+chunks = text_splitter.split_documents(data)
+
+# print(chunks,len(chunks))
+
+encoding = tiktoken.encoding_for_model("text-embedding-ada-002")
+model_cost = 0.0001 / 1000
+
+total_token = 0
+
+for chunk in chunks:
+    total_token = total_token + len(encoding.encode(chunk.page_content))
+
+
+print(f"{total_token * model_cost:.7f}")
 
