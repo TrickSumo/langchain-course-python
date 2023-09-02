@@ -12,7 +12,7 @@ chunks = text_splitter.split_documents(data)
 # print(chunks,len(chunks))
 
 encoding = tiktoken.encoding_for_model("text-embedding-ada-002")
-model_cost = 0.0001 / 1000
+model_cost = 0.0004 / 1000
 
 total_token = 0
 
