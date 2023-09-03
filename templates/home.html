@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RGA</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        margin: 0;
+        padding: 0;
+      }
+      #container {
+        width: 90%;
+        display: inline-block;
+        margin: 0 auto;
+        background-color: aqua;
+        text-align: center;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+      #input {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 75%;
+        margin-bottom: 10px;
+      }
+      #output {
+        background-color: bisque;
+        border-radius: 5px;
+        padding: 10px;
+        display: inline-block;
+      }
+      button {
+        padding: 10px 20px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #555;
+      }
+      .query {
+        float: left;
+        background-color: rgb(182, 228, 216);
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        padding: 9px;
+        margin-bottom: 3px;
+      }
+
+      .result {
+        float: right;
+        background-color: rgb(242, 226, 243);
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-bottom: 15px;
+        padding: 6px;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <input type="text" id="input" placeholder="Enter your niche" /> <br />
+      <button onclick="callLLM()">Ask 🤖</button> <br />
+      <div id="output" class="hidden">
+        <div id="loading" class="hidden">Loading...</div>
+      </div>
+    </div>
+    <script>
+      var history;
+      const callLLM = () => {
+        const input = document.getElementById("input").value;
+        const outputArea = document.getElementById("output");
+        outputArea.classList.remove("hidden");
+        const loadingMessage = document.getElementById("loading");
+        loadingMessage.classList.remove("hidden");
+
+        const api = `http://127.0.0.1:5000/chat?input=${encodeURIComponent(
+          input
+        )}`;
+
+        fetch(api)
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            loadingMessage.classList.add("hidden");
+            query = document.createElement("div");
+            query.classList.add("query");
+            query.innerHTML = data.query;
+            result = document.createElement("div");
+            result.classList.add("result");
+            result.innerHTML = data.result;
+
+            history = data.chat_history;
+
+            outputArea.insertBefore(result, outputArea.firstChild);
+            outputArea.insertBefore(query, outputArea.firstChild);
+
+            document.getElementById("input").value = "";
+          });
+      };
+    </script>
+  </body>
+</html>
