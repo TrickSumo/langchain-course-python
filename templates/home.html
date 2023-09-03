@@ -79,19 +79,22 @@
       </div>
     </div>
     <script>
-      var history;
+      var chat_history = [];
       const callLLM = () => {
+        console.log("API call started...");
         const input = document.getElementById("input").value;
         const outputArea = document.getElementById("output");
         outputArea.classList.remove("hidden");
         const loadingMessage = document.getElementById("loading");
         loadingMessage.classList.remove("hidden");
 
-        const api = `http://127.0.0.1:5000/chat?input=${encodeURIComponent(
-          input
-        )}`;
+        const api = "http://127.0.0.1:5000/chat";
 
-        fetch(api)
+        fetch(api, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ input, chat_history }),
+        })
           .then((res) => res.json())
           .then((data) => {
             console.log(data);
@@ -103,7 +106,8 @@
             result.classList.add("result");
             result.innerHTML = data.result;
 
-            history = data.chat_history;
+            chat_history = data.chat_history;
+            console.log(data.chat_history);
 
             outputArea.insertBefore(result, outputArea.firstChild);
             outputArea.insertBefore(query, outputArea.firstChild);
