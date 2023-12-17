@@ -1,0 +1,72 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+      "title": "Get Context for User's Query",
+      "description": "This API retrieves contextual information for a user's query from a vector database to avoid hallucination.",
+      "version": "v1.0.0"
+    },
+    "servers": [
+      {
+        "url": "RENDER-URL-HERE"
+      }
+    ],
+    "paths": {
+      "/": {
+        "post": {
+          "summary": "Get Context",
+          "description": "Receive a query and return contextual information.",
+          "operationId": "GetContext",
+          "requestBody": {
+            "description": "Request body for getting context.",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/QueryRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful response with context information.",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/QueryResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "QueryRequest": {
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "User's query to retrieve context for."
+            }
+          },
+          "required": ["query"]
+        },
+        "QueryResponse": {
+          "type": "object",
+          "properties": {
+            "relatedContexts": {
+              "type": "array",
+              "description": "List of related contexts.",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  

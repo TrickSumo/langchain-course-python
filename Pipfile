@@ -17,6 +17,7 @@ playwright = "*"
 bs4 = "*"
 sentence-transformers = "*"
 pinecone-client = "*"
+tiktoken = "*"
 
 [dev-packages]
 
