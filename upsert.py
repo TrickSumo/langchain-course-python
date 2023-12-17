@@ -19,7 +19,7 @@ pinecone.init(
 current_dir = os.path.dirname(__file__)
 docs_dir = os.path.join(current_dir, "data")
 
-embedding = OpenAIEmbeddings(model="text-embedding-ada-002", openai_api_key="")
+embedding = OpenAIEmbeddings(model="text-embedding-ada-002")
 
 
 def embedding_cost_calculator(chunks):
