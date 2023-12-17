@@ -72,7 +72,9 @@ def ingest_to_pinecone():
 
                 # Store in Pinecone
                 Pinecone.from_documents(
-                    index_name="rag369", embedding=embedding, documents=chunks
+                    index_name=os.getenv("PINECONE_ENV"),
+                    embedding=embedding,
+                    documents=chunks,
                 )
 
     return True
