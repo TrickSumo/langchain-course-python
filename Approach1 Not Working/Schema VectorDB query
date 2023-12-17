@@ -1,0 +1,116 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Pinecone Vector Query API",
+    "description": "API for querying vector database in Pinecone.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://INDEX-NAME-HERE.svc.us-west1-gcp-free.pinecone.io"
+    }
+  ],
+  "paths": {
+    "/query": {
+      "post": {
+        "summary": "Query Vector Database",
+        "description": "Send a query to the vector database with vector data.",
+        "operationId": "QueryVectorDatabase",
+        "requestBody": {
+          "description": "Request body containing vector data for the query.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VectorQueryRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response with query results.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VectorQueryResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "VectorQueryRequest": {
+        "type": "object",
+        "properties": {
+          "includeValues": {
+            "type": "string",
+            "description": "Flag to include values in the response."
+          },
+          "includeMetadata": {
+            "type": "string",
+            "description": "Flag to include metadata in the response."
+          },
+          "vector": {
+            "type": "array",
+            "description": "Vector data for the query.",
+            "items": {
+              "type": "number"
+            }
+          }
+        },
+        "required": ["vector"]
+      },
+      "VectorQueryResponse": {
+        "type": "object",
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "matches": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "score": {
+                  "type": "number"
+                },
+                "values": {
+                  "type": "array",
+                  "items": {}
+                },
+                "metadata": {
+                  "type": "object",
+                  "properties": {
+                    "page": {
+                      "type": "integer"
+                    },
+                    "source": {
+                      "type": "string"
+                    },
+                    "text": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "namespace": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

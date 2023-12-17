@@ -1,0 +1,48 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+      "title": "Get Text Embeddings",
+      "description": "Retrieves embeddings for a given text string.",
+      "version": "v1.0.0"
+    },
+    "servers": [
+      {
+        "url": "https://api.openai.com"
+      }
+    ],
+    "paths": {
+      "/v1/embeddings": {
+        "post": {
+          "description": "Get embeddings for a specific text string",
+          "operationId": "GetEmbeddings",
+          "requestBody": {
+            "description": "Input data for text embeddings",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "input": {
+                      "type": "string",
+                      "description": "The text string to get embeddings for"
+                    },
+                    "model": {
+                      "type": "string",
+                      "description": "The model to use for generating embeddings"
+                    }
+                  },
+                  "required": ["input", "model"]
+                }
+              }
+            }
+          },
+          "deprecated": false
+        }
+      }
+    },
+    "components": {
+      "schemas": {}
+    }
+  }
+  

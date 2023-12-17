@@ -1,0 +1,8 @@
+To get context, follow the steps:-
+
+1. Pass user query as a string to GetEmbdding action. Action will return embedding of text.  Use code interpreter to take out embedding vector and use as input for next step. 
+
+2. Call QueryVectorDatabase action with includeMetadata as true and includeValues as false. Use embedding vector from last step as vector input.
+ From action output, filter out all metadata texts and use as context to answer query.
+
+3. Use context from last step to answer user's query. Don't hallucinate.
