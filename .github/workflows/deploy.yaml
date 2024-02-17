@@ -18,10 +18,10 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            if [ ! -d /var/www/myapp ]; then
-              git clone https://github.com/your_username/your_repo.git /var/www/myapp
+            if [ ! -d /var/www/ ]; then
+              git clone https://github.com/your_username/your_repo.git /var/www/
             else
-              cd /var/www/myapp
+              cd /var/www/
               git pull
             fi
 
