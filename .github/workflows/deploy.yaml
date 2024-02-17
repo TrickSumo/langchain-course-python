@@ -20,7 +20,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
           source: "."
-          target: "/var/www/langchain-app"
+          target: "/var"
           rm: true # Remove the target directory content before copying
 
       - name: Create .env file on EC2
