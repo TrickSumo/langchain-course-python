@@ -1,5 +1,4 @@
 name: Deploy Flask Application to EC2
-
 on:
   push:
     branches:
@@ -12,6 +11,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Clone repo on EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            if [ ! -d /var/www/myapp ]; then
+              git clone https://github.com/your_username/your_repo.git /var/www/myapp
+            else
+              cd /var/www/myapp
+              git pull
+            fi
+
       - name: Copy application files to EC2
         uses: appleboy/scp-action@master
         with:
@@ -20,7 +33,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
           source: "."
-          target: "/var/www"
+          target: "/var/www/langchain-app"
           rm: true # Remove the target directory content before copying
 
       - name: Create .env file on EC2
