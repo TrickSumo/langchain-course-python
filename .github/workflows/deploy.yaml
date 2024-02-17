@@ -19,7 +19,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             if [ ! -d /var/www/ ]; then
-              git clone https://github.com/your_username/your_repo.git /var/www/
+              git clone https://github.com/TrickSumo/langchain-course-python.git /var/www/
             else
               cd /var/www/
               git pull
