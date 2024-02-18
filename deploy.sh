@@ -13,6 +13,10 @@ cd /var/www/langchain-app/
 sudo apt-get install -y python3 python3-pip
 sudo pip3 install -r requirements.txt
 
+echo "starting gunicorn"
+sudo pkill gunicorn
+gunicorn --workers 3 --bind unix:myapp.sock  server:app &
+
 # Update and install Nginx if not already installed
 if ! command -v nginx > /dev/null; then
     echo "Installing Nginx"
@@ -45,5 +49,5 @@ fi
 # Replace 'server:app' with 'yourfile:app' if your Flask instance is named differently.
 #sudo mv env .env  # Env file
 # gunicorn --workers 3 --bind 0.0.0.0:8000 server:app &
-sudo pkill gunicorn
-gunicorn --workers 3 --bind unix:myapp.sock  server:app &
+
+
