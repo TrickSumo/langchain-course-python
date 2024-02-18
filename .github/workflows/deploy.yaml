@@ -3,7 +3,7 @@ name: Deploy Flask Application to EC2
 on:
   push:
     branches:
-      - test-1 # Adjust this as per your requirement
+      - test-111 # Adjust this as per your requirement
 
 jobs:
   deploy:
