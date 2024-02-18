@@ -1,10 +1,12 @@
 #!/bin/bash
 
-# Delete existing data/files and create new folder
+echo "deleting old app"
 sudo rm -rf /var/www/
+echo "creating app folder"
 sudo mkdir -p /var/www/langchain-app 
 
 # Move files
+echo "moving files to app folder"
 sudo mv  * /var/www/langchain-app
  
 # # Install application dependencies from r equirements.txt 
