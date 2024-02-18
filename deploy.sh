@@ -2,7 +2,10 @@
 
 # Delete existing data/files and create new folder
 sudo rm -rf /var/www/
-cd /var && mkdir www && cd www && mkdir langchain-app 
+cd /var && 
+sudo mkdir www 
+cd www
+sudo mkdir langchain-app 
 
 # Move files
 cd /home/ubuntu
