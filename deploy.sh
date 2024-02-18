@@ -1,11 +1,8 @@
 #!/bin/bash
 
-# Delete existing data/files and create new folder
-sudo rm -rf /var/www/
+# Move files
 sudo mkdir /var/www/ 
 sudo mkdir /var/www/langchain-app
-
-# Move files
 sudo mv  ./* /var/www/langchain-app
 
 # Install application dependencies from requirements.txt 
