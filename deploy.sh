@@ -7,14 +7,15 @@ sudo mkdir -p /var/www/langchain-app
 # Move files
 sudo mv  * /var/www/langchain-app
 
-# Install application dependencies from requirements.txt 
-# cd /var/www/langchain-app/
-# sudo apt-get install -y python3 python3-pip
-# sudo pip3 install -r /var/www/langchain-app/requirements.txt
+Install application dependencies from requirements.txt 
+cd /var/www/langchain-app/
+mv env .env
+sudo apt-get install -y python3 python3-pip
+sudo pip3 install -r /var/www/langchain-app/requirements.txt
 
-# echo "starting gunicorn"
-# sudo pkill gunicorn
-# gunicorn --workers 3 --bind unix:myapp.sock  server:app &
+echo "starting gunicorn"
+sudo pkill gunicorn
+gunicorn --workers 3 --bind unix:myapp.sock  server:app &
 
 # # Update and install Nginx if not already installed
 # if ! command -v nginx > /dev/null; then
