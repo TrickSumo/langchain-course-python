@@ -10,8 +10,8 @@ sudo mv  ./* /var/www/langchain-app
 
 # Install application dependencies from requirements.txt
 # cd /var/www/langchain-app/
-sudo apt-get install -y python3 python3-pip
-sudo pip3 install -r /var/www/langchain-app/requirements.txt
+# sudo apt-get install -y python3 python3-pip
+# sudo pip3 install -r /var/www/langchain-app/requirements.txt
 
 # echo "starting gunicorn"
 # sudo pkill gunicorn
