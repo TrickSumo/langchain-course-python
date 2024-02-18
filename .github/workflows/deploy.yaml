@@ -29,7 +29,9 @@ jobs:
           ls
 
       - name: Check .env contents
-        run: cat .env
+        run: |
+          cat .env
+          ls
 
       - name: Copy files to remote server
         env:
