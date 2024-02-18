@@ -13,10 +13,6 @@ sudo mkdir /var/www/langchain-app
 sudo mv env .env
 sudo mv  ./* /var/www/langchain-app
 
-# Start Gunicorn with the Flask application
-# Replace 'server:app' with 'yourfile:app' if your Flask instance is named differently
-gunicorn --workers 3 --bind 0.0.0.0:8000 server:app &
-
 # Update and install Nginx if not already installed
 if ! command -v nginx > /dev/null; then
     echo "Installing Nginx"
@@ -44,3 +40,8 @@ EOF'
 else
     echo "Nginx reverse proxy configuration already exists."
 fi
+
+# Start Gunicorn with the Flask application
+# Replace 'server:app' with 'yourfile:app' if your Flask instance is named differently.
+cd /var/www/langchain-app/
+gunicorn --workers 3 --bind 0.0.0.0:8000 server:app &
