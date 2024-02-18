@@ -1,9 +1,9 @@
-name: Deploy Flask Application to EC2
+name: Deploy Branch Code to EC2
 
 on:
   push:
     branches:
-      - test-1 # Adjust this as per your requirement
+      - "**" # This triggers the action on push to any branch
 
 jobs:
   deploy:
@@ -12,12 +12,28 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Create .env file on EC2
+      - name: Archive Code
+        run: |
+          tar -czf code.tar.gz --exclude='.git' --exclude='.github' .
+
+      - name: Copy Archive to EC2
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          source: "code.tar.gz"
+          target: "/home/${{ secrets.EC2_USERNAME }}"
+
+      - name: Extract Archive on EC2
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
           script: |
-            rm -rf *
-            git clone https://github.com/TrickSumo/langchain-course-python.git
+            cd "/home/${{ secrets.EC2_USERNAME }}"
+            tar -xzf code.tar.gz
+            # Any other deployment commands you need to run
