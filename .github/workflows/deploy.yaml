@@ -26,6 +26,7 @@ jobs:
         run: |
           echo "ENV=${ENV}" >> .env
           echo "EC2_USERNAME=${EC2_USERNAME}" >> .env
+          ls
 
       - name: Copy files to remote server
         env:
