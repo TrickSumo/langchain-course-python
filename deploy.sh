@@ -43,5 +43,5 @@ fi
 # Start Gunicorn with the Flask application
 # Replace 'server:app' with 'yourfile:app' if your Flask instance is named differently.
 cd /var/www/langchain-app/
-sudo mv env .env  # Env file
+#sudo mv env .env  # Env file
 gunicorn --workers 3 --bind 0.0.0.0:8000 server:app &
