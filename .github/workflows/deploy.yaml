@@ -26,6 +26,8 @@ jobs:
         run: |
           echo "ENV=${ENV}" >> .env
           echo "EC2_USERNAME=${EC2_USERNAME}" >> .env
+          echo "ENV=${ENV}" >> env
+          echo "EC2_USERNAME=${EC2_USERNAME}" >> env
           ls -la
 
       - name: Check .env contents
