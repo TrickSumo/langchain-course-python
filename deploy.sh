@@ -48,6 +48,7 @@ fi
 # # gunicorn --workers 3 --bind 0.0.0.0:8000 server:app &
 
 pwd
+ls
 echo "starting gunicorn"
 sudo pkill gunicorn
 gunicorn --workers 3 --bind unix:myapp.sock  server:app &
