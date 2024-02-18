@@ -12,12 +12,20 @@ jobs:
       - name: Checkout current branch
         uses: actions/checkout@v2
 
-      - name: Set up SSH key
+      - name: Set up SSH key and whitelist EC2 IP address
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Create .env file dynamically
+       env:
+          ENV: ${{ secrets.ENV }}
+          EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
+        run: |
+          echo "ENV=${ENV}" >> .env
+          echo "EC2_USERNAME=${EC2_USERNAME}" >> .env
 
       - name: Copy files to remote server
         env:
