@@ -20,7 +20,7 @@ jobs:
           ssh-keyscan ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
 
       - name: Create .env file dynamically
-       env:
+        env:
           ENV: ${{ secrets.ENV }}
           EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
         run: |
