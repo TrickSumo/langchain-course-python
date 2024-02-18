@@ -5,8 +5,8 @@ sudo rm -rf /var/www/
 sudo mkdir /var/www/
 sudo mkdir /var/www/langchain-app
 
-# # Move files
-# sudo mv  ./* /var/www/langchain-app
+# Move files
+sudo mv  ./* /var/www/langchain-app
 
 # # Install application dependencies from requirements.txt
 # cd /var/www/langchain-app/
