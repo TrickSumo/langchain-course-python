@@ -11,40 +11,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Copy application files to EC2
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          port: 22
-          source: "."
-          target: "/var/www/langchain-app"
-          rm: true # Remove the target directory content before copying
-
-      - name: Create .env file on EC2
+      - name: Clone repo on EC2
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          port: 22
           script: |
-            cat <<EOF > /var/www/langchain-app/.env
-            OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
-            PINECONE_API_KEY=${{ secrets.PINECONE_API_KEY }}
-            PINECONE_ENV=${{ secrets.PINECONE_ENV }}
-            PINECONE_INDEX=${{ secrets.PINECONE_INDEX }}
-            RENDER_API_TOKEN=${{ secrets.RENDER_API_TOKEN }}
-            EOF
-
-      - name: Execute deployment script
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          port: 22
-          script: |
-            chmod +x /var/www/langchain-app/deploy.sh
-            /var/www/langchain-app/deploy.sh
+            if [ ! -d /var/www/ ]; then
+              git clone https://github.com/your_username/your_repo.git /var/www/
+            else
+              cd /var/www/
+              git pull
+            fi
