@@ -59,7 +59,7 @@ sudo rm -rf myapp.sock
 pwd
 ls -la
 echo "starting gunicorn"
-gunicorn --workers 3 --bind unix:myapp.sock  server:app --user www-data --group www-data --daemon
+gunicorn --workers 3 --bind unix:myapp.sock  server:app --user www-data --group www-data 
 ls -la
 
 
