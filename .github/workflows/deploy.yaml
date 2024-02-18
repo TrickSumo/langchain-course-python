@@ -20,6 +20,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             ls /var
+            ls
             if [ ! -d /var/www/ ]; then
               git clone https://github.com/your_username/your_repo.git /var/www/
             else
