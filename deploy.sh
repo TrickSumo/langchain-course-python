@@ -15,11 +15,11 @@ sudo mv env .env
 
 # Use a Python virtual environment
 sudo apt-get install -y python3 python3-pip
-python3 -m venv venv
-source venv/bin/activate
+# python3 -m venv venv
+# source venv/bin/activate
 
 # Install application dependencies from requirements.txt
-pip install -r requirements.txt
+sudo pip install -r requirements.txt
 
 # Update and install Nginx if not already installed
 if ! command -v nginx > /dev/null; then
