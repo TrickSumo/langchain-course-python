@@ -59,6 +59,6 @@ sudo rm -rf myapp.sock
 pwd
 ls
 echo "starting gunicorn"
-gunicorn --workers 3 --bind unix:myapp.sock  server:app &
+gunicorn --workers 3 --bind unix:myapp.sock  server:app --daemon
 
 
