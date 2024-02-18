@@ -3,7 +3,7 @@ name: Deploy Branch Code to EC2
 on:
   push:
     branches:
-      - "**" # This triggers the action on push to any branch
+      - "test-1" # This triggers the action on push to any branch
 
 jobs:
   deploy:
