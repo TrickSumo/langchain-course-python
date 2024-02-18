@@ -19,7 +19,6 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            ls /var
             ls
             if [ ! -d /var/www/ ]; then
               git clone https://github.com/TrickSumo/langchain-course-python.git /var/www/
