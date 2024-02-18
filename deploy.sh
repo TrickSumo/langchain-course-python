@@ -13,10 +13,11 @@ sudo mv  * /var/www/langchain-app
 cd /var/www/langchain-app/
 sudo mv env .env
 
-# Python 
+echo "instqalling python and pip"
 sudo apt-get install -y python3 python3-pip
 
 # Install application dependencies from requirements.txt
+echo "Install application dependencies from requirements.txt"
 sudo pip install -r requirements.txt
 
 # Update and install Nginx if not already installed
