@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Install application dependencies from requirements.txt
+sudo apt-get install -y python3 python3-pip
+sudo pip3 install -r requirements.txt
+
 # Delete existing data/files and create new folder
 sudo rm -rf /var/www/
 sudo mkdir /var/www/
@@ -9,16 +13,9 @@ sudo mkdir /var/www/langchain-app
 sudo mv env .env
 sudo mv  ./* /var/www/langchain-app
 
-# Install application dependencies from requirements.txt
-sudo apt-get install -y python3 python3-pip
-sudo pip3 install -r requirements.txt
-
-
 # Start Gunicorn with the Flask application
 # Replace 'server:app' with 'yourfile:app' if your Flask instance is named differently
 gunicorn --workers 3 --bind 0.0.0.0:8000 server:app &
-
-
 
 # Update and install Nginx if not already installed
 if ! command -v nginx > /dev/null; then
