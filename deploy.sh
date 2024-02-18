@@ -11,7 +11,7 @@ sudo mv  * /var/www/langchain-app
 
 # Navigate to the app directory
 cd /var/www/langchain-app/
-# sudo mv env .env
+sudo mv env .env
 
 # Use a Python virtual environment
 sudo apt-get install -y python3 python3-pip
@@ -57,7 +57,7 @@ sudo rm -rf myapp.sock
 # # Replace 'server:app' with 'yourfile:app' if your Flask instance is named differently.
 # # gunicorn --workers 3 --bind 0.0.0.0:8000 server:app &
 pwd
-ls
+ls -la
 echo "starting gunicorn"
 gunicorn --workers 3 --bind unix:myapp.sock  server:app --daemon
 
