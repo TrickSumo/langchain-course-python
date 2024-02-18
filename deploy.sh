@@ -9,7 +9,7 @@ sudo mkdir -p /var/www/langchain-app
 echo "moving files to app folder"
 sudo mv  * /var/www/langchain-app
  
-# # Install application dependencies from r equirements.txt 
+# # Install application dependencies  from r equirements.txt 
 # cd /var/www/langchain-app/
 # mv env .env
 # sudo apt-get install -y python3 python3-pip
