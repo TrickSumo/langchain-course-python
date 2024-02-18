@@ -37,7 +37,9 @@ jobs:
         env:
           EC2_HOST: ${{ secrets.EC2_HOST }}
           EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
-        run: scp -r * $EC2_USERNAME@$EC2_HOST:/home/ubuntu/
+        run: |
+          scp -r * $EC2_USERNAME@$EC2_HOST:/home/ubuntu/
+          scp .env $EC2_USERNAME@$EC2_HOST:/home/ubuntu/
 
       - name: Clean up SSH key
         if: always()
