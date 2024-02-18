@@ -24,5 +24,4 @@ def domain_name_generator(niche):
 
     res = output_parser.parse(llm(query))
     print(res)
-
     return res
