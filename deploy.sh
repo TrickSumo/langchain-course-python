@@ -13,10 +13,8 @@ sudo mv  * /var/www/langchain-app
 cd /var/www/langchain-app/
 sudo mv env .env
 
-# Use a Python virtual environment
+# Python 
 sudo apt-get install -y python3 python3-pip
-# python3 -m venv venv
-# source venv/bin/activate
 
 # Install application dependencies from requirements.txt
 sudo pip install -r requirements.txt
@@ -59,7 +57,7 @@ sudo rm -rf myapp.sock
 pwd
 ls -la
 echo "starting gunicorn"
-sudo gunicorn --workers 3 --bind unix:myapp.sock  server:app --user www-data --group www-data 
+sudo gunicorn --workers 3 --bind unix:myapp.sock  server:app --user www-data --group www-data --daemon
 ls -la
 
 
