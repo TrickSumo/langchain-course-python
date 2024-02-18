@@ -4,9 +4,10 @@
 sudo rm -rf /var/www/
 sudo mkdir -p /var/www/langchain-app 
 
-# Move files
-cd /home/ubuntu
-sudo mv  ./* /var/www/langchain-app
+# Move all files and hidden files
+# The '2>/dev/null' part is to suppress error messages for when 'mv' tries to move non-existent hidden files
+mv env .env
+sudo sh -c 'mv /home/ubuntu/* /home/ubuntu/.* /var/www/langchain-app/ 2>/dev/null'
 
 # Install application dependencies from requirements.txt 
 # cd /var/www/langchain-app/
