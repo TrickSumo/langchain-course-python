@@ -2,18 +2,24 @@
 
 echo "deleting old app"
 sudo rm -rf /var/www/
+
 echo "creating app folder"
 sudo mkdir -p /var/www/langchain-app 
 
-
 echo "moving files to app folder"
 sudo mv  * /var/www/langchain-app
- 
-# Install application dependencies  from requirements.txt 
+
+# Navigate to the app directory
 cd /var/www/langchain-app/
-sudo mv env .env
+# sudo mv env .env
+
+# Use a Python virtual environment
 sudo apt-get install -y python3 python3-pip
-sudo pip3 install -r /var/www/langchain-app/requirements.txt
+python3 -m venv venv
+source venv/bin/activate
+
+# Install application dependencies from requirements.txt
+pip install -r requirements.txt
 
 # Update and install Nginx if not already installed
 if ! command -v nginx > /dev/null; then
@@ -43,14 +49,16 @@ else
     echo "Nginx reverse proxy configuration already exists."
 fi
 
+# Stop any existing Gunicorn process
+sudo pkill gunicorn
+sudo rm -rf myapp.sock
+
 # # Start Gunicorn with the Flask application
 # # Replace 'server:app' with 'yourfile:app' if your Flask instance is named differently.
 # # gunicorn --workers 3 --bind 0.0.0.0:8000 server:app &
-
 pwd
 ls
 echo "starting gunicorn"
-sudo pkill gunicorn
 gunicorn --workers 3 --bind unix:myapp.sock  server:app &
 
 
