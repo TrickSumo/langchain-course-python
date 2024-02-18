@@ -8,7 +8,7 @@ mkdir /var/www/
 mkdir /var/www/langchain-app
 
 # Copy files
-mv env .env
+cp env .env
 mv  ./* /var/www/langchain-app
 
 # Install application dependencies from requirements.txt
