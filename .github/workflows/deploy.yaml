@@ -21,5 +21,3 @@ jobs:
           script: |
             rm -rf *
             git clone https://github.com/TrickSumo/langchain-course-python.git
-            cd /var
-            mkdir www
