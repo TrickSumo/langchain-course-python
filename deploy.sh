@@ -60,5 +60,6 @@ pwd
 ls -la
 echo "starting gunicorn"
 gunicorn --workers 3 --bind unix:myapp.sock  server:app --daemon
+ls -la
 
 
