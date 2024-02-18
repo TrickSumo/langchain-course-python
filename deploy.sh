@@ -13,7 +13,8 @@ sudo mv  * /var/www/langchain-app
 cd /var/www/langchain-app/
 sudo mv env .env
 
-echo "instqalling python and pip"
+sudo apt-get update
+echo "installing python and pip"
 sudo apt-get install -y python3 python3-pip
 
 # Install application dependencies from requirements.txt
