@@ -14,7 +14,7 @@ jobs:
 
       - name: Archive Code
         run: |
-          tar --warning=no-file-changed -czf code.tar.gz --exclude='.git' --exclude='.github' .
+          tar -cvzf code.tar.gz --warning=no-file-changed --exclude='.git' --exclude='.github' .
 
       - name: Copy Archive to EC2
         uses: appleboy/scp-action@master
