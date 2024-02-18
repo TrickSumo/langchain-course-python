@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>My domain name generator</title>
   </head>
   <body>
     <div id="container">
       <input type="text" id="input" /> <br />
-      <button onclick="callLLM()">Generate Domain Names</button>
+      <button onclick="callLLM()">Generate Domain Names!!!</button>
       <div id="output"></div>
     </div>
     <script>
@@ -17,7 +17,7 @@
         const outputArea = document.getElementById("output");
         outputArea.innerHTML = "Loading...";
 
-        const api = `http://127.0.0.1:5000/chat?input=${encodeURIComponent(
+        const api = `http://44.211.30.53/chat?input=${encodeURIComponent(
           niche
         )}`;
 
