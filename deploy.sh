@@ -1,1 +1,53 @@
-echo "hello" >> test
+#!/bin/bash
+
+sudo -s
+
+# Delete existing data/files and create new folder
+rm -rf /var/www/
+mkdir /var/www/
+mkdir /var/www/langchain-app
+
+# Copy files
+mv env .env
+mv  ./* /var/www/langchain-app
+
+# Update and install Nginx if not already installed
+if ! command -v nginx > /dev/null; then
+    echo "Installing Nginx"
+    sudo apt-get update
+    sudo apt-get install -y nginx
+fi
+
+# Install Python and pip if not already installed
+if ! command -v python3 > /dev/null; then
+    echo "Installing Python3 and pip3"
+    sudo apt-get install -y python3 python3-pip
+fi
+
+# Install application dependencies from requirements.txt
+pip3 install -r requirements.txt
+
+# Start Gunicorn with the Flask application
+# Replace 'server:app' with 'yourfile:app' if your Flask instance is named differently
+gunicorn --workers 3 --bind 0.0.0.0:8000 server:app &
+
+# Configure Nginx to act as a reverse proxy if not already configured
+if [ ! -f /etc/nginx/sites-available/myapp ]; then
+    sudo rm -f /etc/nginx/sites-enabled/default
+    sudo bash -c 'cat > /etc/nginx/sites-available/myapp <<EOF
+server {
+    listen 80;
+    server_name _;
+
+    location / {
+        include proxy_params;
+        proxy_pass http://unix:/var/www/langchain-app/myapp.sock;
+    }
+}
+EOF'
+
+    sudo ln -s /etc/nginx/sites-available/myapp /etc/nginx/sites-enabled
+    sudo systemctl restart nginx
+else
+    echo "Nginx reverse proxy configuration already exists."
+fi
