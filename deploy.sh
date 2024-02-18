@@ -11,25 +11,22 @@ mkdir /var/www/langchain-app
 mv env .env
 mv  ./* /var/www/langchain-app
 
+# Install application dependencies from requirements.txt
+pip3 install -r requirements.txt
+sudo apt-get install -y python3 python3-pip
+
+# Start Gunicorn with the Flask application
+# Replace 'server:app' with 'yourfile:app' if your Flask instance is named differently
+gunicorn --workers 3 --bind 0.0.0.0:8000 server:app &
+
+
+
 # Update and install Nginx if not already installed
 if ! command -v nginx > /dev/null; then
     echo "Installing Nginx"
     sudo apt-get update
     sudo apt-get install -y nginx
 fi
-
-# Install Python and pip if not already installed
-if ! command -v python3 > /dev/null; then
-    echo "Installing Python3 and pip3"
-    sudo apt-get install -y python3 python3-pip
-fi
-
-# Install application dependencies from requirements.txt
-pip3 install -r requirements.txt
-
-# Start Gunicorn with the Flask application
-# Replace 'server:app' with 'yourfile:app' if your Flask instance is named differently
-gunicorn --workers 3 --bind 0.0.0.0:8000 server:app &
 
 # Configure Nginx to act as a reverse proxy if not already configured
 if [ ! -f /etc/nginx/sites-available/myapp ]; then
