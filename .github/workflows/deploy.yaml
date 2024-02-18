@@ -1,39 +1,30 @@
-name: Deploy Branch Code to EC2
+name: Deploy to EC2
 
 on:
   push:
     branches:
-      - "test-1" # This triggers the action on push to any branch
+      - "**" # This triggers the workflow on push to any branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout current branch
         uses: actions/checkout@v2
 
-      - name: Archive Code
+      - name: Set up SSH key
         run: |
-          tar -cvzf code.tar.gz --warning=no-file-changed --exclude='.git' --exclude='.github' .
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Copy Archive to EC2
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          port: 22
-          source: "code.tar.gz"
-          target: "/home/${{ secrets.EC2_USERNAME }}"
+      - name: Copy files to remote server
+        env:
+          EC2_HOST: ${{ secrets.EC2_HOST }}
+          EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
+        run: scp -r * $EC2_USERNAME@$EC2_HOST:/home/ubuntu/
 
-      - name: Extract Archive on EC2
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          port: 22
-          script: |
-            cd "/home/${{ secrets.EC2_USERNAME }}"
-            tar -xzf code.tar.gz
-            # Any other deployment commands you need to run
+      - name: Clean up SSH key
+        if: always()
+        run: rm -f ~/.ssh/id_rsa
