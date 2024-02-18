@@ -54,10 +54,8 @@ sudo rm -rf myapp.sock
 # # Start Gunicorn with the Flask application
 # # Replace 'server:app' with 'yourfile:app' if your Flask instance is named differently.
 # # gunicorn --workers 3 --bind 0.0.0.0:8000 server:app &
-pwd
-ls -la
 echo "starting gunicorn"
 sudo gunicorn --workers 3 --bind unix:myapp.sock  server:app --user www-data --group www-data --daemon
-ls -la
+echo "started gunicorn 🚀"
 
 

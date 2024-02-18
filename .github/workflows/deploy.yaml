@@ -1,4 +1,4 @@
-name: Deploy to EC2
+name: Deploy to EC2 🚀
 
 on:
   push:
@@ -9,17 +9,17 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout current branch
+      - name: Checkout current branch ✅
         uses: actions/checkout@v2
 
-      - name: Set up SSH key and whitelist EC2 IP address
+      - name: Set up SSH key and whitelist EC2 IP address 🐻‍❄️
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Create .env file dynamically
+      - name: Create .env file dynamically 🧨
         env:
           ENV: ${{ secrets.ENV }}
           EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
@@ -30,26 +30,20 @@ jobs:
           echo "OPENAI_API_KEY=${OPENAI_API_KEY}" >> env
           ls -la
 
-      # - name: Check .env contents
-      #   run: |
-      #     cat .env
-      #     cat env
-      #     ls -la
-
-      - name: Copy files to remote server
+      - name: Copy files to remote server 🚙
         env:
           EC2_HOST: ${{ secrets.EC2_HOST }}
           EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
         run: |
           scp -r * $EC2_USERNAME@$EC2_HOST:/home/ubuntu/
 
-      - name: Run Bash Script To Delpoy App
+      - name: Run Bash Script To Delpoy App 🚀
         env:
           EC2_HOST: ${{ secrets.EC2_HOST }}
           EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
         run: |
           ssh -o StrictHostKeyChecking=no $EC2_USERNAME@$EC2_HOST "chmod +x ./deploy.sh && ./deploy.sh"
 
-      - name: Clean up SSH key
+      - name: Clean up SSH key 🚀
         if: always()
         run: rm -f ~/.ssh/id_rsa
