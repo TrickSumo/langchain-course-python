@@ -28,6 +28,9 @@ jobs:
           echo "EC2_USERNAME=${EC2_USERNAME}" >> .env
           ls
 
+      - name: Check .env contents
+        run: cat .env
+
       - name: Copy files to remote server
         env:
           EC2_HOST: ${{ secrets.EC2_HOST }}
