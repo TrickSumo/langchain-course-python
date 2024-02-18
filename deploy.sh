@@ -12,8 +12,9 @@ mv env .env
 mv  ./* /var/www/langchain-app
 
 # Install application dependencies from requirements.txt
-pip3 install -r requirements.txt
 sudo apt-get install -y python3 python3-pip
+pip3 install -r requirements.txt
+
 
 # Start Gunicorn with the Flask application
 # Replace 'server:app' with 'yourfile:app' if your Flask instance is named differently
