@@ -5,7 +5,7 @@ sudo rm -rf /var/www/
 echo "creating app folder"
 sudo mkdir -p /var/www/langchain-app 
 
-# Move files
+
 echo "moving files to app folder"
 sudo mv  * /var/www/langchain-app
  
